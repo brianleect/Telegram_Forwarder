@@ -44,6 +44,7 @@ class Development(Config):
     # Make sure to include the '-' sign in group and channel ids.
     FROM_CHATS = [-1001234567890]  # List of chat id's to forward messages from.
     TO_CHATS = [-1001234567890, -1234567890]  # List of chat id's to forward messages to.
+    IGNORE_LIST = ['testing999'] # List of keywords that are checked against messages which we will not send if detected
 
     REMOVE_TAG = True
     WORKERS = 4
