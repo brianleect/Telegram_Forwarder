@@ -58,6 +58,7 @@ else:
     except ValueError:
         raise Exception("Your TO_CHATS list does not contain valid integers.")
 
+    IGNORE_LIST = Config.IGNORE_LIST
     REMOVE_TAG = Config.REMOVE_TAG
     WEBHOOK = Config.WEBHOOK
     IP_ADDRESS = Config.IP_ADDRESS

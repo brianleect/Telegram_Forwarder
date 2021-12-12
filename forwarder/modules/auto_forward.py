@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext, Filters, MessageHandler
 from telegram.error import ChatMigrated
 from telegram.update import Update
 
-from forwarder import FROM_CHATS, LOGGER, REMOVE_TAG, TO_CHATS, dispatcher
+from forwarder import FROM_CHATS, LOGGER, REMOVE_TAG, TO_CHATS, dispatcher, IGNORE_LIST
 
 
 def send_message(message: Message, chat_id: int) -> Union[MessageId, Message]:
@@ -14,12 +14,26 @@ def send_message(message: Message, chat_id: int) -> Union[MessageId, Message]:
     return message.forward(chat_id)
 
 
+def check_message_ignore(message: str) -> bool:
+    message = message.text.lower()
+    for ignore_word in IGNORE_LIST:
+        if ignore_word.lower() in message:
+            return True
+
+    return False
+
 
 def forward(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
     if not message or not chat:
         return
+
+    # If keyword to be ignored is found, we do not send the message
+    if check_message_ignore(message):
+        LOGGER.info(f"Ignoring message: {message.text}")
+        return
+
     from_chat_name = chat.title or chat.first_name
 
     for chat in TO_CHATS:

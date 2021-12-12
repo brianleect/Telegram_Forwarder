@@ -22,6 +22,9 @@ class Config(object):
     FROM_CHATS = [-1001234704297]  # List of chat id's to forward messages from
     TO_CHATS = [-1001128355490]  # List of chat id's to forward messages to
 
+    # IGNORE LIST, skips messages that contain keywords in list
+    IGNORE_LIST = ['testing000']
+
     # FOR WEBHOOKS
     WEBHOOK = False
     IP_ADDRESS = "127.0.0.1"  # Use "0.0.0.0" if using Heroku
